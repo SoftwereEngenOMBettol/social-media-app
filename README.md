@@ -25,3 +25,15 @@ A full-featured social media app built with React and Redux
 cd server
 npm install
 npm start
+```
+
+## Important Notes:
+
+1. **Check `client/.gitignore`** - It should already exclude `node_modules/`
+2. **Create `server/.gitignore`** if it doesn't exist:
+   ```bash
+   cd server
+   echo "node_modules/" > .gitignore
+   echo ".env" >> .gitignore
+   echo "npm-debug.log*" >> .gitignore
+   cd ..
