@@ -13,14 +13,17 @@ const app = express();
 app.use(express.json());
 
 // Configure CORS for deployment
-app.use(cors({
+const corsOptions = {
   origin: [
-    process.env.CLIENT_URL || "http://localhost:3000",
-    process.env.LOCAL_CLIENT_URL || "http://localhost:3000",
-    "https://social-media-app-grb9.onrender.com"  
+    'https://social-media-app-grb9.onrender.com', // Your new frontend URL
+    'http://localhost:3000' // Keep for local development
   ],
-  credentials: true
-}));
+  credentials: true, // Crucial if you use cookies/sessions
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'], // Specify allowed methods[citation:2]
+  allowedHeaders: ['Content-Type', 'Authorization'] // Common headers needed
+};
+
+app.use(cors(corsOptions));
 
 // Use environment variable for MongoDB connection
 const MONGODB_URI = process.env.MONGODB_URI || `mongodb+srv://admin:admin1234@socialcluster.i6sk72z.mongodb.net/SocialAppDb?appName=SocialCluster`;
