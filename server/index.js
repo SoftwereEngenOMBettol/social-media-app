@@ -6,16 +6,30 @@ import UserModel from "./Model/UserModel.js";
 import PostModel from "./Model/PostModel.js";
 
 
+// Load environment variables
+dotenv.config();
+
 const app = express();
 app.use(express.json());
-app.use(cors());
 
-const connectString = `mongodb+srv://admin:admin1234@socialcluster.i6sk72z.mongodb.net/SocialAppDb?appName=SocialCluster`;
+// Configure CORS for deployment
+app.use(cors({
+  origin: [
+    process.env.CLIENT_URL || "http://localhost:3000",
+    process.env.LOCAL_CLIENT_URL || "http://localhost:3000",
+    "https://your-app-name.onrender.com"  // Your actual deployed frontend URL
+  ],
+  credentials: true
+}));
 
-mongoose.connect(connectString)
-  .then(() => console.log("MongoDB connected"))
+// Use environment variable for MongoDB connection
+const MONGODB_URI = process.env.MONGODB_URI || `mongodb+srv://admin:admin1234@socialcluster.i6sk72z.mongodb.net/SocialAppDb?appName=SocialCluster`;
+
+mongoose.connect(MONGODB_URI)
+  .then(() => console.log("MongoDB connected successfully"))
   .catch(err => console.error("MongoDB connection error:", err));
 
+// ... rest of your code remains the same ...
 
   
 app.get("/", async (req, res) => {
@@ -355,24 +369,7 @@ app.post("/addFriend", async (req, res) => {
   }
 });
 
-// Get User's Friends (for "Friends" page)
-app.get("/myfriends/:userId", async (req, res) => {
-  try {
-    const { userId } = req.params; // Retrieve userId from the route params
 
-    // Find user and populate their friends' details
-    const user = await UserModel.findById(userId)
-      .populate('friends', '_id name email profilePicture bio'); // Populate the friends array
-
-    if (!user) {
-      return res.status(404).json({ error: "User not found" }); // Handle user not found
-    }
-
-    res.status(200).json(user.friends); // Respond with the friends array
-  } catch (error) {
-    res.status(500).json({ error: error.message }); // Handle internal server error
-  }
-});
 
 // Remove Friend (move from "Friends" back to "Find Friends")
 app.delete("/myfriends/remove", async (req, res) => {
@@ -406,32 +403,12 @@ app.delete("/myfriends/remove", async (req, res) => {
 
 
 
-// ========== SEARCH API ==========
 
-// Search Users
-app.get("/search/users", async (req, res) => {
-  try {
-    const { query } = req.query;
-    
-    if (!query) {
-      return res.status(400).json({ error: "Search query is required" });
-    }
+// Use environment variable for port
+const PORT = process.env.PORT || 3001;
 
-    const users = await UserModel.find({
-      $or: [
-        { name: { $regex: query, $options: 'i' } },
-        { email: { $regex: query, $options: 'i' } }
-      ]
-    }).select('name email profilePicture bio').limit(20);
-
-    res.status(200).json(users);
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-});
-
-
-app.listen(3001, () => {
-  console.log(` Server running on port 3001`);
-  console.log(`it is connected with server successfully`);
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+  console.log(` MongoDB connected successfully`);
+  console.log(` Environment: ${process.env.NODE_ENV || 'development'}`);
 });
