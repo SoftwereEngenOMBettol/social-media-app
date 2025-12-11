@@ -5,7 +5,7 @@ const About = () => {
   return (
     <div>
       <h1>About this project</h1>
-      <p>This project is developed by: AFRAH AL HARTHI, RAHMA AL-MAHROUQIYA , ZAMARED AL SHABIBI </p>
+      <p>This project is developed by Student </p>
       <p>Email: utas.edu.om</p>
     </div>
   );
