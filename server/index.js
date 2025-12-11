@@ -17,7 +17,7 @@ app.use(cors({
   origin: [
     process.env.CLIENT_URL || "http://localhost:3000",
     process.env.LOCAL_CLIENT_URL || "http://localhost:3000",
-    "https://your-app-name.onrender.com"  // Your actual deployed frontend URL
+    "https://social-media-app-grb9.onrender.com"  
   ],
   credentials: true
 }));
