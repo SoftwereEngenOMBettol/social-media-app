@@ -5,6 +5,7 @@
     "express": "^5.1.0",
     "mongod": "^2.0.0",
     "mongoose": "^8.19.3",
+    "dotenv": "^16.0.0",
     "nodeman": "^1.1.2"
   },
   "name": "server",
