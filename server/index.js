@@ -10,7 +10,7 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
-const connectString = `URL of MongoDB`;
+const connectString = `mongodb+srv://admin:admin1234@socialcluster.i6sk72z.mongodb.net/SocialAppDb?appName=SocialCluster`;
 
 mongoose.connect(connectString)
   .then(() => console.log("MongoDB connected"))
