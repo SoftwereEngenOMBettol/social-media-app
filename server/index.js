@@ -4,7 +4,7 @@ import cors from "cors";
 import bcrypt from "bcrypt";
 import UserModel from "./Model/UserModel.js";
 import PostModel from "./Model/PostModel.js";
-
+import dotenv from 'dotenv';
 
 // Load environment variables
 dotenv.config();
