@@ -20,7 +20,7 @@ The React frontend keeps all application state in Redux Toolkit — three slices
 
 | Feed | Create a post |
 | --- | --- |
-| ![Feed](docs/01-feed.jpg) | ![Add post](docs/07-add-post.jpg) |
+| ![Feed](docs/01-feed.png) | ![Add post](docs/07-add-post.jpg) |
 
 | Find friends | My friends |
 | --- | --- |
